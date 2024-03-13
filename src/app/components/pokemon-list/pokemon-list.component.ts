@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
-import { PokemonList, PokemonDetails, PokemonListItem } from '../../models/pokemon/pokemon.model';
+import { PokemonListItem } from '../../models/pokemon/pokemon.model';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -13,23 +13,23 @@ export class PokemonListComponent implements OnInit {
 
   constructor(private pokemonService: PokemonService) {}
 
+  // Al cargar se manda la peticion com 20 registros
   ngOnInit(): void {
-    this.getPokemonList(20, 0);
+    this.getPokemonListWithDetails('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0');
   }
 
-  getPokemonList(limit: number, offset: number) {
-    this.pokemonService.getPokemonList(limit, offset).subscribe(data => {
-      this.pokemonList = data.results;
-      this.next = data.next;
+  // Funcion para obtener la lista con detalles y añadirlas a la lista
+  getPokemonListWithDetails(url:string) {
+    this.pokemonService.getPokemonListWithDetails(url).subscribe(detailsList => {
+      this.pokemonList = this.pokemonList.concat(detailsList.map(details => ({ name: details.name, url: '' })));
+      this.next = this.pokemonService.getNextUrl();
     });
   }
 
+  // Funcion para cargar más pokemons
   loadMore() {
     if (this.next) {
-      this.pokemonService.getPokemonByUrl(this.next).subscribe(data => {
-        this.pokemonList = [...this.pokemonList, ...data.results];
-        this.next = data.next;
-      });
+        this.getPokemonListWithDetails(this.next);
     }
   }
 }
