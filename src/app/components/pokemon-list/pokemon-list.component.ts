@@ -80,7 +80,7 @@ export class PokemonListComponent implements OnInit {
     this.searchTerm = '';
     this.searching = false;
     this.notFound = false;
-    this.pokemonList = this.originalPokemonList.slice(0, this.limit);
+    this.pokemonList = this.originalPokemonList;
     this.resetSortState();
   }
 
@@ -167,5 +167,4 @@ export class PokemonListComponent implements OnInit {
   goToDetails(pokemonId: number): void {
     this.router.navigate(['/pokemon', pokemonId]);
   }
-  
 }

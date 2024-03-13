@@ -104,14 +104,13 @@
   <div *ngIf="!notFound" class="mt-8">
     <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <li
-      *ngFor="let pokemon of pokemonList"
-      class="bg-white p-4 rounded-md shadow-md transition-transform transform-gpu cursor-pointer hover:scale-105 hover:shadow-lg hover:rotate-1"
-      [style.border]="getFirstTypeBorder(pokemon)"
-      [ngStyle]="{ 'box-shadow': getFirstTypeShadow(pokemon) }"
-      style="will-change: transform"
-      (click)="goToDetails(pokemon.id)"
-    >
-    
+        *ngFor="let pokemon of pokemonList"
+        class="bg-white p-4 rounded-md shadow-md transition-transform transform-gpu cursor-pointer hover:scale-105 hover:shadow-lg hover:rotate-1"
+        [style.border]="getFirstTypeBorder(pokemon)"
+        [ngStyle]="{ 'box-shadow': getFirstTypeShadow(pokemon) }"
+        style="will-change: transform"
+        (click)="goToDetails(pokemon.id)"
+      >
         <!-- Número del Pokémon -->
         <span class="text-gray-600 font-medium text-lg">
           N.° {{ formatId(pokemon.id) }}
@@ -132,7 +131,7 @@
           <!-- Peso del Pokémon -->
           <p class="text-gray-600 mb-2 flex items-center">
             <mat-icon class="mr-1 text-gray-500">balance</mat-icon>
-            <span>{{ pokemon.weight }} kg</span>
+            <span>{{ pokemon.weight / 100 }} kg</span>
           </p>
           <!-- Habilidades del Pokémon -->
           <div class="flex flex-wrap items-center mb-2">
