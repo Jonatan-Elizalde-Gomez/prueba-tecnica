@@ -6,13 +6,20 @@ export interface PokemonList {
 }
 
 export interface PokemonListItem {
-  weight: any;
+  sprites: string;
+  id: number;
+  weight: number;
   name: string;
   url: string;
   types: string[];
+  abilities: string[];
 }
 
 export interface PokemonDetails {
+  sprites: {
+  front_default: string | null;
+  };
+  id: number;
   abilities: Ability[];
   height: number;
   weight: number;
