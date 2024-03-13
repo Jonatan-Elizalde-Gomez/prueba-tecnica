@@ -26,7 +26,9 @@ export interface PokemonDetails {
   name: string;
   types: Type[];
   stats: Stat[];
-  species: string;
+  species: {
+    url: string;
+  };
   evolution_chain: EvolutionChain;
 }
 
@@ -46,6 +48,7 @@ export interface Type {
   slot: number;
   type: TypeDetail;
 }
+
 
 export interface TypeDetail {
   name: string;

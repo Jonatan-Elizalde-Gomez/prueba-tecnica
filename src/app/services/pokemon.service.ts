@@ -63,7 +63,7 @@ export class PokemonService {
         abilities: details.abilities.map((ability) => ability.ability.name).slice(0, 4),
         height: details.height,
         weight: details.weight,
-        types: details.types.map((type) => type.type.name),
+        types: details.types.map((type: any) => type.type.name), // Proporciona un tipo explícito para 'type'
       }))
     );
   }
@@ -72,10 +72,21 @@ export class PokemonService {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     return this.http.get<PokemonDetails>(url);
   }
+  
+
+  getPokemonDetailsByName(name: string): Observable<any> {
+    const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
+    return this.http.get<any>(url);
+  }
+
+  
+  // Método para obtener la especie de un Pokémon por su URL
+  getPokemonSpecies(speciesUrl: string): Observable<any> {
+    return this.http.get<any>(speciesUrl);
+  }
 
   // Método para obtener la cadena de evolución de un Pokémon por su URL
   getPokemonEvolutionChain(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
-  
 }
