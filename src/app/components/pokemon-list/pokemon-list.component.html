@@ -1,10 +1,54 @@
-<div *ngIf="pokemonList.length; else noData">
-    <ul>
-      <li *ngFor="let pokemon of pokemonList">
-        {{ pokemon.name }}
-      </li>
-    </ul>
-    <button (click)="loadMore()" *ngIf="next">Cargar más</button>
-  </div>
-  <ng-template #noData>No hay datos disponibles.</ng-template>
-  
+<div class="relative mb-4">
+  <mat-form-field appearance="outline" class="w-full">
+    <input matInput placeholder="Buscar Pokémon" [(ngModel)]="searchTerm" (keyup.enter)="searchByName()">
+    <button mat-icon-button matSuffix color="primary" class="absolute right-5 top-1/2 transform -translate-y-1/2" (click)="searchByName()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button matSuffix color="warn" *ngIf="searchTerm" class="absolute right-14 top-1/2 transform -translate-y-1/2" (click)="clean()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+
+<div class="mb-4 flex items-center space-x-2">
+  <button mat-icon-button color="primary" (click)="sortBy('name')">
+    <mat-icon>sort_by_alpha</mat-icon>
+  </button>
+  <span>Nombre</span>
+
+  <button mat-icon-button color="primary" (click)="sortByType()">
+    <mat-icon>category</mat-icon>
+  </button>
+  <span>Tipo</span>
+
+  <button mat-icon-button color="primary" (click)="sortByWeight('asc')">
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+  <span>Peso Ascendente</span>
+
+  <button mat-icon-button color="primary" (click)="sortByWeight('desc')">
+    <mat-icon>arrow_downward</mat-icon>
+  </button>
+  <span>Peso Descendente</span>
+
+  <button mat-icon-button color="primary" (click)="clean()">
+    <mat-icon>delete_sweep  </mat-icon>
+  </button>
+    <span>Limpiar filtros</span>
+
+</div>
+
+<div class="mb-4" *ngIf="loadingData">
+  <mat-progress-spinner diameter="30" mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div *ngIf="notFound" class="text-red-500 mb-4">No se encontraron Pokémon con ese nombre.</div>
+
+<div *ngIf="!notFound">
+  <ul class="list-disc list-inside">
+    <li *ngFor="let pokemon of pokemonList">{{ pokemon.name }}</li>
+  </ul>
+</div>
+
+<button *ngIf="!searching && !notFound" mat-raised-button color="primary" class="mb-4" (click)="loadMore()">Cargar más</button>
