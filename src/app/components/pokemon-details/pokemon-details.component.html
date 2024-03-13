@@ -1,0 +1,37 @@
+<div class="mx-2 sm:mx-8 md:mx-16 lg:mx-64 mt-8">
+    <div *ngIf="pokemonDetails" class="p-4 bg-white rounded-md shadow-md">
+      <!-- Nombre del Pokémon -->
+      <h1 class="text-3xl font-bold mb-4">{{ pokemonDetails.name }}</h1>
+      
+      <!-- Imagen del Pokémon -->
+      <div class="flex justify-center mb-4">
+        <img [src]="pokemonDetails.sprites.front_default" alt="{{ pokemonDetails.name }}" class="w-48 h-auto">
+      </div>
+      
+      <!-- Detalles del Pokémon -->
+      <div class="mb-4">
+        <p><strong>ID:</strong> {{ pokemonDetails.id }}</p>
+        <p><strong>Altura:</strong> {{ pokemonDetails.height }} decímetros</p>
+        <p><strong>Peso:</strong> {{ pokemonDetails.weight }} hectogramos</p>
+        <p><strong>Tipos:</strong> {{ pokemonDetails.types.join(', ') }}</p>
+      </div>
+      
+      <!-- Estadísticas del Pokémon -->
+      <div class="mb-4">
+        <h2 class="text-xl font-bold mb-2">Estadísticas</h2>
+        <div *ngFor="let stat of pokemonDetails.stats" class="flex items-center mb-2">
+          <div class="w-20">{{ stat.stat.name }}</div>
+          <div class="flex items-center w-56">
+            <div class="bg-gray-200 h-6 flex-1 rounded-md mr-2">
+              <div [style.width.%]="stat.base_stat / 2" class="bg-blue-500 h-full rounded-md"></div>
+            </div>
+            <span>{{ stat.base_stat }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Botón para regresar -->
+      <button mat-button color="primary">Regresar</button>
+    </div>
+  </div>
+  

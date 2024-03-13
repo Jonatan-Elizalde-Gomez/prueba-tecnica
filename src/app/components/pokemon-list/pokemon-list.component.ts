@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonListItem } from '../../models/pokemon/pokemon.model';
 import { PokemonColorService } from '../../services/pokemon-color.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -27,7 +28,8 @@ export class PokemonListComponent implements OnInit {
 
   constructor(
     private pokemonService: PokemonService,
-    public pokemonColorService: PokemonColorService
+    public pokemonColorService: PokemonColorService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -161,4 +163,9 @@ export class PokemonListComponent implements OnInit {
   capitalizeFirstLetter(name: string): string {
     return name.replace(/\b\w/g, (char) => char.toUpperCase());
   }
+
+  goToDetails(pokemonId: number): void {
+    this.router.navigate(['/pokemon', pokemonId]);
+  }
+  
 }

@@ -17,7 +17,7 @@ export interface PokemonListItem {
 
 export interface PokemonDetails {
   sprites: {
-  front_default: string | null;
+    front_default: string | null;
   };
   id: number;
   abilities: Ability[];
@@ -25,7 +25,11 @@ export interface PokemonDetails {
   weight: number;
   name: string;
   types: Type[];
+  stats: Stat[];
+  species: string;
+  evolution_chain: EvolutionChain;
 }
+
 
 export interface Ability {
   ability: AbilityDetail;
@@ -45,5 +49,21 @@ export interface Type {
 
 export interface TypeDetail {
   name: string;
+  url: string;
+}
+
+
+
+export interface Stat {
+  base_stat: number;
+  effort: number;
+  stat: {
+    name: string;
+    url: string;
+  };
+}
+
+
+export interface EvolutionChain {
   url: string;
 }

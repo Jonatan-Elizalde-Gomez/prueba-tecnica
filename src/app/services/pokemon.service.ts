@@ -67,5 +67,15 @@ export class PokemonService {
       }))
     );
   }
+
+  getPokemonDetailsById(id: number): Observable<PokemonDetails> {
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+    return this.http.get<PokemonDetails>(url);
+  }
+
+  // Método para obtener la cadena de evolución de un Pokémon por su URL
+  getPokemonEvolutionChain(url: string): Observable<any> {
+    return this.http.get<any>(url);
+  }
   
 }

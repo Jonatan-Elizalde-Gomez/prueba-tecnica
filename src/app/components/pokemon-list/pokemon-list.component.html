@@ -1,167 +1,171 @@
-<!-- Sección de Búsqueda -->
-<div class="relative mb-4">
-  <!-- Campo de búsqueda -->
-  <mat-form-field appearance="outline" class="w-full">
-    <input
-      matInput
-      placeholder="Buscar Pokémon"
-      [(ngModel)]="searchTerm"
-      (keyup.enter)="searchByName()"
-    />
-    <!-- Botón de búsqueda -->
-    <button
-      mat-icon-button
-      matSuffix
-      color="primary"
-      class="absolute right-5 top-1/2 transform -translate-y-1/2"
-      (click)="searchByName()"
-    >
-      <mat-icon>search</mat-icon>
-    </button>
-    <!-- Botón para limpiar búsqueda -->
-    <button
-      mat-icon-button
-      matSuffix
-      color="warn"
-      *ngIf="searchTerm"
-      class="absolute right-14 top-1/2 transform -translate-y-1/2"
-      (click)="clean()"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-</div>
-
-<!-- Sección de Botones de Ordenamiento y Filtros -->
-<div class="mb-4 flex flex-wrap items-center space-x-2">
-  <!-- Botón unificado para ordenar por nombre -->
-  <div>
-    <!-- Icono de ordenamiento por nombre -->
-    <button mat-icon-button color="primary" (click)="toggleSortBy('name')">
-      <mat-icon>{{
-        sortOrder === "name"
-          ? sortDirection === "desc"
-            ? "arrow_upward"
-            : "arrow_downward"
-          : "sort_by_alpha"
-      }}</mat-icon>
-    </button>
-    <span>Nombre</span>
+<div class="mx-2 sm:mx-8 md:mx-16 lg:mx-64 mt-8">
+  <h1 class="text-center">Listado de Pokémon</h1>
+  <!-- Sección de Búsqueda -->
+  <div class="relative mb-4">
+    <!-- Campo de búsqueda -->
+    <mat-form-field appearance="outline" class="w-full">
+      <input
+        matInput
+        placeholder="Buscar Pokémon"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="searchByName()"
+      />
+      <!-- Botón de búsqueda -->
+      <button
+        mat-icon-button
+        matSuffix
+        color="primary"
+        class="absolute right-5 top-1/2 transform -translate-y-1/2"
+        (click)="searchByName()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      <!-- Botón para limpiar búsqueda -->
+      <button
+        mat-icon-button
+        matSuffix
+        color="warn"
+        *ngIf="searchTerm"
+        class="absolute right-14 top-1/2 transform -translate-y-1/2"
+        (click)="clean()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
   </div>
-  <!-- Botón unificado para ordenar por tipo -->
-  <div>
-    <!-- Icono de ordenamiento por tipo -->
-    <button mat-icon-button color="primary" (click)="toggleSortBy('type')">
-      <mat-icon>{{
-        sortOrder === "type"
-          ? sortDirection === "desc"
-            ? "arrow_upward"
-            : "arrow_downward"
-          : "category"
-      }}</mat-icon>
-    </button>
-    <span>Tipo</span>
-  </div>
-  <!-- Botón unificado para ordenar por peso -->
-  <div>
-    <!-- Icono de ordenamiento por peso -->
-    <button mat-icon-button color="primary" (click)="toggleSortBy('weight')">
-      <mat-icon>{{
-        sortOrder === "weight"
-          ? sortDirection === "desc"
-            ? "arrow_upward"
-            : "arrow_downward"
-          : "balance"
-      }}</mat-icon>
-    </button>
-    <span>Peso</span>
-  </div>
-  <!-- Botón para limpiar filtros -->
-  <div>
-    <button mat-icon-button color="primary" (click)="clean()">
-      <mat-icon>delete_sweep</mat-icon>
-    </button>
-    <span>Limpiar filtros</span>
-  </div>
-</div>
 
-<!-- Indicador de Carga -->
-<div class="mb-4" *ngIf="loadingData">
-  <mat-progress-spinner
-    diameter="30"
-    mode="indeterminate"
-  ></mat-progress-spinner>
-</div>
+  <!-- Sección de Botones de Ordenamiento y Filtros -->
+  <div class="mb-4 flex flex-wrap items-center space-x-2">
+    <!-- Botón unificado para ordenar por nombre -->
+    <div>
+      <!-- Icono de ordenamiento por nombre -->
+      <button mat-icon-button color="primary" (click)="toggleSortBy('name')">
+        <mat-icon>{{
+          sortOrder === "name"
+            ? sortDirection === "desc"
+              ? "arrow_upward"
+              : "arrow_downward"
+            : "sort_by_alpha"
+        }}</mat-icon>
+      </button>
+      <span>Nombre</span>
+    </div>
+    <!-- Botón unificado para ordenar por tipo -->
+    <div>
+      <!-- Icono de ordenamiento por tipo -->
+      <button mat-icon-button color="primary" (click)="toggleSortBy('type')">
+        <mat-icon>{{
+          sortOrder === "type"
+            ? sortDirection === "desc"
+              ? "arrow_upward"
+              : "arrow_downward"
+            : "category"
+        }}</mat-icon>
+      </button>
+      <span>Tipo</span>
+    </div>
+    <!-- Botón unificado para ordenar por peso -->
+    <div>
+      <!-- Icono de ordenamiento por peso -->
+      <button mat-icon-button color="primary" (click)="toggleSortBy('weight')">
+        <mat-icon>{{
+          sortOrder === "weight"
+            ? sortDirection === "desc"
+              ? "arrow_upward"
+              : "arrow_downward"
+            : "balance"
+        }}</mat-icon>
+      </button>
+      <span>Peso</span>
+    </div>
+    <!-- Botón para limpiar filtros -->
+    <div>
+      <button mat-icon-button color="primary" (click)="clean()">
+        <mat-icon>delete_sweep</mat-icon>
+      </button>
+      <span>Limpiar filtros</span>
+    </div>
+  </div>
 
-<!-- Mensaje si no se encuentran resultados -->
-<div *ngIf="notFound" class="text-red-500 mb-4">
-  No se encontraron Pokémon con ese nombre.
-</div>
+  <!-- Indicador de Carga -->
+  <div class="mb-4" *ngIf="loadingData">
+    <mat-progress-spinner
+      diameter="30"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  </div>
 
-<!-- Listado de Pokémon -->
-<div *ngIf="!notFound" class="mt-8">
-  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <li
-      *ngFor="let pokemon of pokemonList"
-      class="bg-white p-4 rounded-md shadow-md transition-transform transform-gpu cursor-pointer hover:scale-105 hover:shadow-lg hover:rotate-1"
-      [style.border]="getFirstTypeBorder(pokemon)"
-      style="will-change: transform"
-    >
-      <!-- Número del Pokémon -->
-      <span class="text-gray-600 font-medium text-lg">
-        N.° {{ formatId(pokemon.id) }}
-      </span>
-      <div>
-        <!-- Imagen del Pokémon -->
-        <img
-          [src]="pokemon.sprites"
-          alt="{{ pokemon.name }}"
-          class="flex justify-center mx-auto sm:w-full w-3/4 h-auto mb-2"
-        />
-      </div>
-      <div>
-        <!-- Nombre del Pokémon -->
-        <h2 class="text-xl font-bold text-gray-800 mb-2">
-          {{ capitalizeFirstLetter(pokemon.name) }}
-        </h2>
-        <!-- Peso del Pokémon -->
-        <p class="text-gray-600 mb-2 flex items-center">
-          <mat-icon class="mr-1 text-gray-500">balance</mat-icon>
-          <span>{{ pokemon.weight }} kg</span>
-        </p>
-        <!-- Habilidades del Pokémon -->
-        <div class="flex flex-wrap items-center mb-2">
-          <ng-container *ngFor="let ability of pokemon.abilities">
-            <div
-              class="bg-gray-200 text-gray-800 flex items-center px-3 py-1 rounded-full mr-2 mb-2"
-            >
-              <mat-icon class="text-sm mr-1">whatshot</mat-icon>
-              <span class="text-sm font-semibold">{{ ability }}</span>
-            </div>
-          </ng-container>
+  <!-- Mensaje si no se encuentran resultados -->
+  <div *ngIf="notFound" class="text-red-500 mb-4">
+    No se encontraron Pokémon con ese nombre.
+  </div>
+
+  <!-- Listado de Pokémon -->
+  <div *ngIf="!notFound" class="mt-8">
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <li
+        *ngFor="let pokemon of pokemonList"
+        class="bg-white p-4 rounded-md shadow-md transition-transform transform-gpu cursor-pointer hover:scale-105 hover:shadow-lg hover:rotate-1"
+        [style.border]="getFirstTypeBorder(pokemon)"
+        style="will-change: transform"
+        (click)="goToDetails(pokemon.id)"
+      >
+        <!-- Número del Pokémon -->
+        <span class="text-gray-600 font-medium text-lg">
+          N.° {{ formatId(pokemon.id) }}
+        </span>
+        <div>
+          <!-- Imagen del Pokémon -->
+          <img
+            [src]="pokemon.sprites"
+            alt="{{ pokemon.name }}"
+            class="flex justify-center mx-auto sm:w-full w-3/4 h-auto mb-2"
+          />
         </div>
-        <!-- Tipos del Pokémon -->
-        <p class="text-gray-700 mb-2">
-          <span
-            *ngFor="let type of pokemon.types"
-            class="inline-block text-white px-2 py-1 rounded-full text-sm mr-1"
-            [style.background-color]="pokemonColorService.getTypeColor(type)"
-            >{{ type }}</span
-          >
-        </p>
-      </div>
-    </li>
-  </ul>
-</div>
+        <div>
+          <!-- Nombre del Pokémon -->
+          <h2 class="text-xl font-bold text-gray-800 mb-2">
+            {{ capitalizeFirstLetter(pokemon.name) }}
+          </h2>
+          <!-- Peso del Pokémon -->
+          <p class="text-gray-600 mb-2 flex items-center">
+            <mat-icon class="mr-1 text-gray-500">balance</mat-icon>
+            <span>{{ pokemon.weight }} kg</span>
+          </p>
+          <!-- Habilidades del Pokémon -->
+          <div class="flex flex-wrap items-center mb-2">
+            <ng-container *ngFor="let ability of pokemon.abilities">
+              <div
+                class="bg-gray-200 text-gray-800 flex items-center px-3 py-1 rounded-full mr-2 mb-2"
+              >
+                <mat-icon class="text-sm mr-1">whatshot</mat-icon>
+                <span class="text-sm font-semibold">{{ ability }}</span>
+              </div>
+            </ng-container>
+          </div>
+          <!-- Tipos del Pokémon -->
+          <p class="text-gray-700 mb-2">
+            <span
+              *ngFor="let type of pokemon.types"
+              class="inline-block text-white px-2 py-1 rounded-full text-sm mr-1"
+              [style.background-color]="pokemonColorService.getTypeColor(type)"
+              >{{ type }}</span
+            >
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-<!-- Botón para cargar más Pokémon -->
-<div class="flex justify-center">
-  <button
-    *ngIf="!searching && !notFound"
-    mat-raised-button
-    class="mb-8 mt-8 px-6 text-lg py-3 rounded-md shadow-md bg-[#f9f9f9] hover:bg-gray-100 text-black font-medium transition-colors duration-300 ease-in-out"
-    (click)="loadMore()"
-  >
-    Cargar más
-  </button>
+  <!-- Botón para cargar más Pokémon -->
+  <div class="flex justify-center">
+    <button
+      *ngIf="!searching && !notFound"
+      mat-raised-button
+      class="mb-8 mt-8 px-6 text-lg py-3 rounded-md shadow-md bg-[#f9f9f9] hover:bg-gray-100 text-black font-medium transition-colors duration-300 ease-in-out"
+      (click)="loadMore()"
+    >
+      Cargar más
+    </button>
+  </div>
 </div>
